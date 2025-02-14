@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>❤️ 情人节快乐！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff66b2, #ff1493);
+            font-family: "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+        }
+        
+        .bigHeart {
+            position: relative;
+            width: 100px;
+            height: 90px;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+        
+        .bigHeart::before,
+        .bigHeart::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50px 50px 0 0;
+        }
+        
+        .bigHeart::before {
+            left: 50px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .bigHeart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        .message {
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+            transition: all 1s;
+        }
+        
+        .show { opacity: 1; }
+        
+        .floating-text {
+            position: absolute;
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            animation: float 3s infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bigHeart" onclick="showMessage()"></div>
+    <div class="message" id="message">
+        <h2>亲爱的小锦锦</h2>
+        <p>遇见你是我今生最大的幸运</p>
+        <p>你的笑容是我每天最期待的礼物</p>
+        <p>❤️ 愿与你携手走过每一个春夏秋冬 ❤️</p>
+        <p>—— 永远爱你的宇</p>
+    </div>
+
+    <script>
+        function showMessage() {
+            document.getElementById('message').classList.add('show');
+            createFloatText();
+            // 添加微信震动反馈
+            if(typeof WeixinJSBridge !== 'undefined') {
+                WeixinJSBridge.invoke('vibrate', {});
+            }
+        }
+
+        function createFloatText() {
+            const texts = ['Love', '❤️', '520', '1314', '甜蜜'];
+            for(let i=0; i<10; i++){
+                const text = document.createElement('div');
+                text.className = 'floating-text';
+                text.style.left = Math.random()*95 + '%';
+                text.style.animationDelay = Math.random()*2 + 's';
+                text.textContent = texts[Math.floor(Math.random()*texts.length)];
+                document.body.appendChild(text);
+            }
+        }
+    </script>
+</body>
+</html>
